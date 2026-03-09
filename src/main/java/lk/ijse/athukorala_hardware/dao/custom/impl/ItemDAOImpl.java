@@ -24,7 +24,7 @@ public class ItemDAOImpl implements ItemDAO {
                     resultSet.getInt("item_id"),
                     resultSet.getString("name"),
                     resultSet.getDouble("price"),
-                    resultSet.getInt("qty")
+                    resultSet.getInt("stock_qty")
             ));
         }
         return itemList;

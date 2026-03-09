@@ -1,6 +1,7 @@
 package lk.ijse.athukorala_hardware.bo;
 
 import lk.ijse.athukorala_hardware.bo.custom.impl.CustomerBOImpl;
+import lk.ijse.athukorala_hardware.bo.custom.impl.ItemBOImpl;
 
 public class BOFactory {
     public static BOFactory boFactory;
@@ -25,6 +26,8 @@ public class BOFactory {
         switch (type) {
             case CUSTOMER:
                 return new CustomerBOImpl();
+            case ITEM:
+                return new ItemBOImpl();
             default:
                 return null;
         }

@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.athukorala_hardware.bo.BOFactory;
+import lk.ijse.athukorala_hardware.bo.custom.ItemBO;
 import lk.ijse.athukorala_hardware.dto.ItemDTO;
 import lk.ijse.athukorala_hardware.dto.tm.ItemTM;
 import lk.ijse.athukorala_hardware.model.ItemModel;
@@ -29,7 +31,8 @@ public class ItemController implements Initializable {
     private final String ITEM_PRICE_REGEX = "^[0-9]+(\\.[0-9]{1,2})?$";
     private final String ITEM_QTY_REGEX = "^[0-9]+$";
 
-    private final ItemModel itemModel = new ItemModel();
+//    private final ItemModel itemModel = new ItemModel();
+ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOType.ITEM);
     public TextField itemCodeField;
     public TextField itemNameField;
     public TextField itemPriceField;
@@ -79,7 +82,7 @@ public class ItemController implements Initializable {
                 return;
             }
             try {
-                ItemDTO dto = itemModel.searchItem(id);
+                ItemDTO dto = itemBO.searchItem(id);
 
                 if (dto != null) {
                     itemNameField.setText(dto.getName());
@@ -92,6 +95,8 @@ public class ItemController implements Initializable {
 
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -113,7 +118,7 @@ public class ItemController implements Initializable {
                     Integer.parseInt(itemQtyField.getText().trim())
             );
 
-            boolean isSaved = itemModel.saveItem(dto);
+            boolean isSaved = itemBO.saveItem(dto);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Item Saved Successfully").show();
@@ -123,6 +128,8 @@ public class ItemController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -143,7 +150,7 @@ public class ItemController implements Initializable {
                     Integer.parseInt(itemQtyField.getText().trim())
             );
 
-            boolean isUpdated = itemModel.updateItem(dto);
+            boolean isUpdated = itemBO.updateItem(dto);
 
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Item Updated Successfully").show();
@@ -153,6 +160,8 @@ public class ItemController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -166,7 +175,7 @@ public class ItemController implements Initializable {
         }
 
         try {
-            boolean isDeleted = itemModel.deleteItem(id);
+            boolean isDeleted = itemBO.deleteItem(id);
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Item Deleted Successfully").show();
@@ -176,13 +185,15 @@ public class ItemController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @FXML
     private void loadItemTable() {
         try {
-            List<ItemDTO> itemList = itemModel.getItem();
+            List<ItemDTO> itemList = itemBO.getAllItems();
             ObservableList<ItemTM> obList = FXCollections.observableArrayList();
 
             for (ItemDTO dto : itemList) {
@@ -197,6 +208,8 @@ public class ItemController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -231,7 +244,7 @@ public class ItemController implements Initializable {
 
     public void printItemOnAction(ActionEvent actionEvent) {
         try {
-            itemModel.printItemReport();
+            itemBO.printItemReport();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (JRException e) {

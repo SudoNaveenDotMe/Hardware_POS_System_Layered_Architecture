@@ -1,6 +1,7 @@
 package lk.ijse.athukorala_hardware.dao;
 
 import lk.ijse.athukorala_hardware.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.athukorala_hardware.dao.custom.impl.ItemDAOImpl;
 
 public class DAOFactory {
     public static DAOFactory daoFactory;
@@ -24,6 +25,8 @@ public class DAOFactory {
         switch (type) {
             case CUSTOMER:
                 return new CustomerDAOImpl();
+             case ITEM:
+                 return new ItemDAOImpl();
             default:
                 return null;
         }
