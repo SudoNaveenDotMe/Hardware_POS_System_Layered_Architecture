@@ -1,9 +1,6 @@
 package lk.ijse.athukorala_hardware.bo;
 
-import lk.ijse.athukorala_hardware.bo.custom.impl.CustomerBOImpl;
-import lk.ijse.athukorala_hardware.bo.custom.impl.DriverBOImpl;
-import lk.ijse.athukorala_hardware.bo.custom.impl.ItemBOImpl;
-import lk.ijse.athukorala_hardware.bo.custom.impl.SupplierBOImpl;
+import lk.ijse.athukorala_hardware.bo.custom.impl.*;
 
 public class BOFactory {
     public static BOFactory boFactory;
@@ -13,15 +10,6 @@ public class BOFactory {
 
     public static BOFactory getInstance() {
         return boFactory == null ? new BOFactory() : boFactory;
-    }
-
-    public enum BOType {
-        CUSTOMER,
-        ITEM,
-        ORDER,
-        DRIVER,
-        SUPPLIER,
-        USER
     }
 
     public SuperBO getBO(BOFactory.BOType type) {
@@ -34,8 +22,21 @@ public class BOFactory {
                 return new DriverBOImpl();
             case SUPPLIER:
                 return new SupplierBOImpl();
+            case ORDER:
+                return new PlaceOrderBOImpl();
+            case USER:
+                return new UserBOImpl();
             default:
                 return null;
         }
+    }
+
+    public enum BOType {
+        CUSTOMER,
+        ITEM,
+        ORDER,
+        DRIVER,
+        SUPPLIER,
+        USER
     }
 }

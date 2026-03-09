@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.athukorala_hardware.bo.BOFactory;
+import lk.ijse.athukorala_hardware.bo.custom.UserBO;
 import lk.ijse.athukorala_hardware.dto.UserDTO;
 import lk.ijse.athukorala_hardware.dto.tm.UserTM;
 import lk.ijse.athukorala_hardware.model.UserModel;
@@ -24,7 +26,7 @@ public class UserController implements Initializable {
     private final String NAME_REGEX = "^[A-Za-z ]{2,50}$";
     private final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
 
-    private final UserModel userModel = new UserModel();
+//    private final UserModel userModel = new UserModel();
 
     @FXML
     public AnchorPane userContent;
@@ -53,6 +55,7 @@ public class UserController implements Initializable {
     public TableColumn<UserTM, String> colRole;
     public TableColumn<UserTM, String> colPassword;
 
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
     private boolean isUserExists = false;
 
     @Override
@@ -87,7 +90,7 @@ public class UserController implements Initializable {
 
     private void loadUserTable() {
         try {
-            List<UserDTO> allUsers = userModel.getAllUsers();
+            List<UserDTO> allUsers = userBO.getAllUsers();
             ObservableList<UserTM> obList = FXCollections.observableArrayList();
 
             for (UserDTO dto : allUsers) {
@@ -104,6 +107,8 @@ public class UserController implements Initializable {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to load users").show();
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -113,7 +118,7 @@ public class UserController implements Initializable {
             String id = idField.getText();
 
             try {
-                UserDTO userDTO = userModel.searchUserById(id);
+                UserDTO userDTO = userBO.searchUserById(id);
 
                 if (userDTO != null) {
                     nameField.setText(userDTO.getName());
@@ -129,6 +134,8 @@ public class UserController implements Initializable {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -145,7 +152,7 @@ public class UserController implements Initializable {
                     cmbRole.getValue()
             );
 
-            boolean isSaved = userModel.saveUser(userDTO);
+            boolean isSaved = userBO.saveUser(userDTO);
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "User Saved Successfully").show();
                 clearFields(null);
@@ -153,6 +160,8 @@ public class UserController implements Initializable {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error Saving User: " + e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -173,7 +182,7 @@ public class UserController implements Initializable {
                     cmbRole.getValue()
             );
 
-            boolean isUpdated = userModel.updateUser(userDTO);
+            boolean isUpdated = userBO.updateUser(userDTO);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "User Updated Successfully").show();
                 clearFields(null);
@@ -181,6 +190,8 @@ public class UserController implements Initializable {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error Updating User").show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -192,7 +203,7 @@ public class UserController implements Initializable {
         }
 
         try {
-            boolean isDeleted = userModel.deleteUser(idField.getText());
+            boolean isDeleted = userBO.deleteUser(idField.getText());
             if (isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "User Deleted Successfully").show();
                 clearFields(null);
@@ -200,6 +211,8 @@ public class UserController implements Initializable {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error Deleting User").show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

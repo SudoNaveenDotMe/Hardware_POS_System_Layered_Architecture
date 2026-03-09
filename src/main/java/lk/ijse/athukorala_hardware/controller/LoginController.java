@@ -7,6 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lk.ijse.athukorala_hardware.App;
+import lk.ijse.athukorala_hardware.bo.BOFactory;
+import lk.ijse.athukorala_hardware.bo.custom.UserBO;
 import lk.ijse.athukorala_hardware.db.DBConnection;
 import lk.ijse.athukorala_hardware.dto.UserDTO;
 import lk.ijse.athukorala_hardware.model.UserModel;
@@ -18,7 +20,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    private final UserModel userModel = new UserModel();
+//    private final UserModel userModel = new UserModel();
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
 
     @FXML
     public PasswordField passwordField;
@@ -37,7 +40,7 @@ public class LoginController implements Initializable {
 
         try {
             DBConnection.getInstance().getConnection();
-            UserDTO userDTO = userModel.searchUser(email);
+            UserDTO userDTO = userBO.searchUserByEmail(email);
 
             if (userDTO != null) {
                 if (userDTO.getPassword().equals(password)) {
@@ -56,6 +59,8 @@ public class LoginController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

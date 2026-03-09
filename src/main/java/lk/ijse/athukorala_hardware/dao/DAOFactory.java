@@ -1,9 +1,6 @@
 package lk.ijse.athukorala_hardware.dao;
 
-import lk.ijse.athukorala_hardware.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.athukorala_hardware.dao.custom.impl.DriverDAOImpl;
-import lk.ijse.athukorala_hardware.dao.custom.impl.ItemDAOImpl;
-import lk.ijse.athukorala_hardware.dao.custom.impl.SupplierDAOImpl;
+import lk.ijse.athukorala_hardware.dao.custom.impl.*;
 
 public class DAOFactory {
     public static DAOFactory daoFactory;
@@ -15,6 +12,29 @@ public class DAOFactory {
         return daoFactory == null ? new DAOFactory() : daoFactory;
     }
 
+    public SuperDAO getDAO(DAOType type) {
+        switch (type) {
+            case CUSTOMER:
+                return new CustomerDAOImpl();
+            case ITEM:
+                return new ItemDAOImpl();
+            case DRIVER:
+                return new DriverDAOImpl();
+            case SUPPLIER:
+                return new SupplierDAOImpl();
+            case ORDER:
+                return new OrderDAOImpl();
+            case ORDER_DETAIL:
+                return new OrderDetailsDAOImpl();
+            case QUERY:
+                return new QueryDAOImpl();
+            case USER:
+                return new UserDAOImpl();
+            default:
+                return null;
+        }
+    }
+
     public enum DAOType {
         CUSTOMER,
         ITEM,
@@ -22,21 +42,7 @@ public class DAOFactory {
         SUPPLIER,
         ORDER,
         ORDER_DETAIL,
-        QUERY
-    }
-
-    public SuperDAO getDAO(DAOType type) {
-        switch (type) {
-            case CUSTOMER:
-                return new CustomerDAOImpl();
-             case ITEM:
-                 return new ItemDAOImpl();
-             case DRIVER:
-                 return new DriverDAOImpl();
-             case SUPPLIER:
-                 return new SupplierDAOImpl();
-            default:
-                return null;
-        }
+        QUERY,
+        USER
     }
 }

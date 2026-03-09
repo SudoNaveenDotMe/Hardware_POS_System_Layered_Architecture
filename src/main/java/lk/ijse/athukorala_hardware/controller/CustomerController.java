@@ -14,7 +14,6 @@ import lk.ijse.athukorala_hardware.bo.BOFactory;
 import lk.ijse.athukorala_hardware.bo.custom.CustomerBO;
 import lk.ijse.athukorala_hardware.dto.CustomerDTO;
 import lk.ijse.athukorala_hardware.dto.tm.CustomerTM;
-import lk.ijse.athukorala_hardware.model.CustomerModel;
 import net.sf.jasperreports.engine.JRException;
 
 import java.net.URL;

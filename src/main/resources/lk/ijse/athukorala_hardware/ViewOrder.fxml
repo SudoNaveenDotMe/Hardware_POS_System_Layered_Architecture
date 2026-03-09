@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="userContent" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: #faf7f9;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.athukorala_hardware.controller.ViewOrderController">
+<AnchorPane fx:id="userContent" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: #faf7f9;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="lk.ijse.athukorala_hardware.controller.ViewOrderController">
 
     <children>
-
         <VBox alignment="CENTER" prefHeight="100.0" prefWidth="1200.0" style="-fx-background-color: #f3d6c7; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
             <children>
-                <Text text="History">
+                <Text text="Order History">
                     <font>
                         <Font name="System Bold" size="32.0" />
                     </font>
@@ -22,18 +27,52 @@
             </children>
         </VBox>
 
-        <Pane layoutY="550.0" prefHeight="330.0" prefWidth="1200.0">
+        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="120.0" prefHeight="50.0" prefWidth="1160.0" spacing="15.0">
             <children>
-                <TableView fx:id="tblOrders" layoutX="20.0" layoutY="-411.0" prefHeight="734.0" prefWidth="1160.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd;">
+                <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="300.0" promptText="Search by Order ID or Customer ID..." style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #ccc; -fx-padding: 5 15 5 15;">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextField>
+
+                <Text text="From:" font="$x1">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <DatePicker fx:id="dpStartDate" prefHeight="40.0" prefWidth="160.0" promptText="Start Date" style="-fx-font-size: 14px;" />
+
+                <Text text="To:" font="$x1">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <DatePicker fx:id="dpEndDate" prefHeight="40.0" prefWidth="160.0" promptText="End Date" style="-fx-font-size: 14px;" />
+
+                <Button mnemonicParsing="false" onAction="#refreshOnAction" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 20; -fx-font-weight: bold;" text="Reset" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </children>
+            <padding>
+                <Insets left="10.0" />
+            </padding>
+        </HBox>
+
+        <VBox layoutX="20.0" layoutY="190.0" prefHeight="680.0" prefWidth="1160.0">
+            <children>
+                <TableView fx:id="tblOrders" prefHeight="680.0" prefWidth="1160.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd;">
                     <columns>
-                        <TableColumn fx:id="colOrderId" prefWidth="221.0" text="Order ID" />
-                        <TableColumn fx:id="colCustomerId" prefWidth="263.0" text="Customer ID" />
-                        <TableColumn fx:id="colDate" prefWidth="439.0" text="Order Date" />
-                        <TableColumn fx:id="colTotal" prefWidth="233.0" text="Order Amount" />
+                        <TableColumn fx:id="colOrderId" prefWidth="180.0" style="-fx-alignment: CENTER;" text="Order ID" />
+                        <TableColumn fx:id="colCustomerId" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Customer ID" />
+                        <TableColumn fx:id="colDate" prefWidth="300.0" style="-fx-alignment: CENTER;" text="Order Date" />
+                        <TableColumn fx:id="colTotal" prefWidth="250.0" style="-fx-alignment: CENTER_RIGHT;" text="Order Amount (Rs.)" />
+                        <TableColumn fx:id="colAction" prefWidth="220.0" style="-fx-alignment: CENTER;" text="Action" />
                     </columns>
                 </TableView>
             </children>
-        </Pane>
+        </VBox>
 
     </children>
 </AnchorPane>
