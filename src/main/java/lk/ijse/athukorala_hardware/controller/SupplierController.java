@@ -12,9 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.athukorala_hardware.bo.BOFactory;
+import lk.ijse.athukorala_hardware.bo.custom.SupplierBO;
 import lk.ijse.athukorala_hardware.dto.SupplierDTO;
 import lk.ijse.athukorala_hardware.dto.tm.SupplierTM;
-import lk.ijse.athukorala_hardware.model.SupplierModel;
 import net.sf.jasperreports.engine.JRException;
 
 import java.net.URL;
@@ -54,7 +55,9 @@ public class SupplierController implements Initializable {
     @FXML
     public TableColumn<SupplierTM, String> colAddress;
 
-    private final SupplierModel supplierModel = new SupplierModel();
+    //    private final SupplierModel supplierModel = new SupplierModel();
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
+
     private boolean isSupplierExists = false;
 
     @Override
@@ -88,7 +91,7 @@ public class SupplierController implements Initializable {
 
     private void loadSupplierTable() {
         try {
-            List<SupplierDTO> supplierList = supplierModel.getSuppliers();
+            List<SupplierDTO> supplierList = supplierBO.getSuppliers();
             ObservableList<SupplierTM> obList = FXCollections.observableArrayList();
 
             for (SupplierDTO dto : supplierList) {
@@ -105,6 +108,8 @@ public class SupplierController implements Initializable {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to load suppliers: " + e.getMessage()).show();
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -118,7 +123,7 @@ public class SupplierController implements Initializable {
             }
 
             try {
-                SupplierDTO dto = supplierModel.searchSupplier(id);
+                SupplierDTO dto = supplierBO.searchSupplier(id);
 
                 if (dto != null) {
                     nameField.setText(dto.getName());
@@ -134,6 +139,8 @@ public class SupplierController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Database Error").show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -154,7 +161,7 @@ public class SupplierController implements Initializable {
                 // Constructor: name, contact, email, address
                 SupplierDTO dto = new SupplierDTO(name, contact, email, address);
 
-                boolean isSaved = supplierModel.saveSupplier(dto);
+                boolean isSaved = supplierBO.saveSupplier(dto);
 
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Supplier Saved Successfully").show();
@@ -164,6 +171,8 @@ public class SupplierController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error saving supplier: " + e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -185,7 +194,7 @@ public class SupplierController implements Initializable {
                 // Constructor: id, name, contact, email, address
                 SupplierDTO dto = new SupplierDTO(Integer.parseInt(id), name, contact, email, address);
 
-                boolean isUpdated = supplierModel.updateSupplier(dto);
+                boolean isUpdated = supplierBO.updateSupplier(dto);
 
                 if (isUpdated) {
                     new Alert(Alert.AlertType.INFORMATION, "Supplier Updated Successfully").show();
@@ -197,6 +206,8 @@ public class SupplierController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error updating supplier: " + e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -210,7 +221,7 @@ public class SupplierController implements Initializable {
         }
 
         try {
-            boolean isDeleted = supplierModel.deleteSupplier(id);
+            boolean isDeleted = supplierBO.deleteSupplier(id);
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Supplier Deleted Successfully").show();
@@ -222,6 +233,8 @@ public class SupplierController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Error deleting supplier: " + e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -258,7 +271,7 @@ public class SupplierController implements Initializable {
 
     public void printSupplierOnAction(ActionEvent actionEvent) {
         try {
-            supplierModel.printSupplierReport();
+            supplierBO.printSupplierReport();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (JRException e) {
