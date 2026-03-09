@@ -1,0 +1,161 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="hardware_customers" language="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MYSQL-HARDWARE"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50.0" bold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18.0" bold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14.0" bold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle mode="Opaque" backcolor="#EEEFF0">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle backcolor="#D8D8D8">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<dataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<query language="sql"><![CDATA[]]></query>
+	</dataset>
+	<parameter name="logo_path" class="java.lang.InputStream"/>
+	<query language="SQL"><![CDATA[SELECT * FROM customer]]></query>
+	<field name="cus_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cus_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="cus_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="contact"/>
+		<property name="com.jaspersoft.studio.field.label" value="contact"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address"/>
+		<property name="com.jaspersoft.studio.field.label" value="address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email"/>
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<title height="87" splitType="Stretch">
+		<element kind="line" uuid="806ce5df-1219-4876-ae0c-ca7405b1f246" x="0" y="80" width="556" height="1">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="staticText" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8" x="415" y="10" width="50" height="20" hTextAlign="Right">
+			<text><![CDATA[Date:]]></text>
+			<box rightPadding="4"/>
+		</element>
+		<element kind="textField" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979" x="465" y="10" width="84" height="20" pattern="EEEEE dd MMMMM yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="staticText" uuid="e622555d-198b-4ccd-a4a1-c59c53304058" x="0" y="0" width="204" height="25" fontSize="16.0" bold="true">
+			<text><![CDATA[Athukorala Hardware]]></text>
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="staticText" uuid="b8cc42fd-b569-497d-834d-7e854040ad18" x="0" y="55" width="205" height="15">
+			<text><![CDATA[0787955525]]></text>
+		</element>
+		<element kind="staticText" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde" x="0" y="25" width="205" height="15">
+			<text><![CDATA[Main Road, Pitigala]]></text>
+		</element>
+		<element kind="staticText" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e" x="0" y="40" width="205" height="15">
+			<text><![CDATA[Elpitiya, 80400]]></text>
+		</element>
+	</title>
+	<columnHeader height="27">
+		<element kind="staticText" uuid="0aba592b-d236-4e2f-9f76-75a15cd0c269" positionType="Float" x="0" y="0" width="60" height="20" forecolor="#000000" fontName="DejaVu Sans" fontSize="12.0" bold="true" vTextAlign="Middle" style="Column header">
+			<text><![CDATA[#ID]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="20f50472-cfd3-4d75-af88-4354507bb70b"/>
+		</element>
+		<element kind="staticText" uuid="7199a357-226f-4500-a9aa-1b2b03e94441" positionType="Float" x="60" y="0" width="131" height="20" forecolor="#000000" fontName="DejaVu Sans" fontSize="12.0" bold="true" vTextAlign="Middle" style="Column header">
+			<text><![CDATA[Name]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="879547e3-eee4-4c97-b8cd-c95c7f6216cb"/>
+		</element>
+		<element kind="staticText" uuid="9147cb09-a141-4a64-bcc0-ed7c35a7fd2d" positionType="Float" x="191" y="0" width="109" height="20" forecolor="#000000" fontName="DejaVu Sans" fontSize="12.0" bold="true" vTextAlign="Middle" style="Column header">
+			<text><![CDATA[Contact]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3ea96647-421a-46f3-9fde-a190a55cfaab"/>
+		</element>
+		<element kind="staticText" uuid="50711037-0fcf-4ef9-b167-a3530c06d233" positionType="Float" x="300" y="0" width="120" height="20" forecolor="#000000" fontName="DejaVu Sans" fontSize="12.0" bold="true" vTextAlign="Middle" style="Column header">
+			<text><![CDATA[Address]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b51fb594-5cdd-445a-82ec-515bec68c7ec"/>
+		</element>
+		<element kind="staticText" uuid="30ca9482-c226-48e4-afe5-62e5cad73ea2" positionType="Float" x="420" y="0" width="135" height="20" forecolor="#000000" fontName="DejaVu Sans" fontSize="12.0" bold="true" vTextAlign="Middle" style="Column header">
+			<text><![CDATA[Email]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43033024-792a-4aa8-91b4-7ab199347ad3"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<element kind="textField" uuid="6c129a16-b064-4696-b603-64260270e58f" positionType="Float" x="0" y="0" width="60" height="20" fontName="DejaVu Sans" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" vTextAlign="Middle" style="Detail">
+				<expression><![CDATA[$F{cus_id}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="20f50472-cfd3-4d75-af88-4354507bb70b"/>
+			</element>
+			<element kind="textField" uuid="7b8335e1-44cf-451d-8723-b02dd54179f8" positionType="Float" x="60" y="0" width="131" height="20" fontName="DejaVu Sans" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" vTextAlign="Middle" style="Detail">
+				<expression><![CDATA[$F{name}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="879547e3-eee4-4c97-b8cd-c95c7f6216cb"/>
+			</element>
+			<element kind="textField" uuid="76e7d4c9-d7fb-4039-b5e5-1466ea4b5ec1" positionType="Float" x="191" y="0" width="109" height="20" fontName="DejaVu Sans" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" vTextAlign="Middle" style="Detail">
+				<expression><![CDATA[$F{contact}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3ea96647-421a-46f3-9fde-a190a55cfaab"/>
+			</element>
+			<element kind="textField" uuid="7b9c2375-eb9f-49a6-92ad-a6baf360e048" positionType="Float" x="300" y="0" width="120" height="20" fontName="DejaVu Sans" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" vTextAlign="Middle" style="Detail">
+				<expression><![CDATA[$F{address}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b51fb594-5cdd-445a-82ec-515bec68c7ec"/>
+			</element>
+			<element kind="textField" uuid="31deb404-a325-4dbd-9695-4a6d7e72a2b3" positionType="Float" x="420" y="0" width="135" height="20" fontName="DejaVu Sans" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" vTextAlign="Middle" style="Detail">
+				<expression><![CDATA[$F{email}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43033024-792a-4aa8-91b4-7ab199347ad3"/>
+			</element>
+		</band>
+	</detail>
+	<lastPageFooter height="177">
+		<element kind="staticText" uuid="36aa233d-4305-48e6-974a-1bbf89bb3c8f" positionType="Float" mode="Opaque" x="0" y="147" width="556" height="30" backcolor="#E6E8E9" fontName="Serif" fontSize="9.0" italic="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[THANKYOU FOR YOUR BUSINESS]]></text>
+		</element>
+	</lastPageFooter>
+</jasperReport>

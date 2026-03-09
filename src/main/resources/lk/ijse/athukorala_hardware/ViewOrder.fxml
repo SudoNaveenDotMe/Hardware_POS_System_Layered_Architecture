@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="userContent" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: #faf7f9;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.athukorala_hardware.controller.ViewOrderController">
+
+    <children>
+
+        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="1200.0" style="-fx-background-color: #f3d6c7; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
+            <children>
+                <Text text="History">
+                    <font>
+                        <Font name="System Bold" size="32.0" />
+                    </font>
+                </Text>
+            </children>
+        </VBox>
+
+        <Pane layoutY="550.0" prefHeight="330.0" prefWidth="1200.0">
+            <children>
+                <TableView fx:id="tblOrders" layoutX="20.0" layoutY="-411.0" prefHeight="734.0" prefWidth="1160.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd;">
+                    <columns>
+                        <TableColumn fx:id="colOrderId" prefWidth="221.0" text="Order ID" />
+                        <TableColumn fx:id="colCustomerId" prefWidth="263.0" text="Customer ID" />
+                        <TableColumn fx:id="colDate" prefWidth="439.0" text="Order Date" />
+                        <TableColumn fx:id="colTotal" prefWidth="233.0" text="Order Amount" />
+                    </columns>
+                </TableView>
+            </children>
+        </Pane>
+
+    </children>
+</AnchorPane>

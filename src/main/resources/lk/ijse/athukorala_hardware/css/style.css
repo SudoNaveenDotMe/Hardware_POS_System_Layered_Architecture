@@ -1,0 +1,37 @@
+/* ==== Modern Navigation Button ==== */
+.nav-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 180px;
+    -fx-pref-height: 42px;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* Hover effect */
+.nav-btn:hover {
+    -fx-background-color: #f0f0f5;
+}
+
+/* Focused (clicked/active) state */
+.nav-btn:focused {
+    -fx-background-color: #e3e3f5;
+}
+
+/* ==== Logout Button ==== */
+.logout-btn {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 180px;
+    -fx-pref-height: 42px;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.logout-btn:hover {
+    -fx-background-color: #ff6b5a;
+}
