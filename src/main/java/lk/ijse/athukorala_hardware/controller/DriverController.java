@@ -12,9 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.athukorala_hardware.bo.BOFactory;
+import lk.ijse.athukorala_hardware.bo.custom.DriverBO;
 import lk.ijse.athukorala_hardware.dto.DriverDTO;
 import lk.ijse.athukorala_hardware.dto.tm.DriverTM;
-import lk.ijse.athukorala_hardware.model.DriverModel;
 import net.sf.jasperreports.engine.JRException;
 
 import java.net.URL;
@@ -45,7 +46,9 @@ public class DriverController implements Initializable {
     @FXML
     public TableColumn<DriverTM, String> colAddress;
 
-    private final DriverModel driverModel = new DriverModel();
+    //    private final DriverModel driverModel = new DriverModel();
+    DriverBO driverBO = (DriverBO) BOFactory.getInstance().getBO(BOFactory.BOType.DRIVER);
+
     private boolean isDriverExists = false;
 
 
@@ -87,7 +90,7 @@ public class DriverController implements Initializable {
             }
 
             try {
-                DriverDTO dto = driverModel.searchDriver(id);
+                DriverDTO dto = driverBO.searchDriver(id);
 
                 if (dto != null) {
                     driverNameField.setText(dto.getName());
@@ -102,6 +105,8 @@ public class DriverController implements Initializable {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -135,7 +140,7 @@ public class DriverController implements Initializable {
 
         try {
             DriverDTO dto = new DriverDTO(name, contact, address);
-            boolean isSaved = driverModel.saveDriver(dto);
+            boolean isSaved = driverBO.saveDriver(dto);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Driver Saved Successfully").show();
@@ -144,6 +149,8 @@ public class DriverController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -170,7 +177,7 @@ public class DriverController implements Initializable {
                     address
             );
 
-            boolean isUpdated = driverModel.updateDriver(dto);
+            boolean isUpdated = driverBO.updateDriver(dto);
 
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Driver Updated Successfully").show();
@@ -179,6 +186,8 @@ public class DriverController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -191,7 +200,7 @@ public class DriverController implements Initializable {
         }
 
         try {
-            boolean isDeleted = driverModel.deleteDriver(id);
+            boolean isDeleted = driverBO.deleteDriver(id);
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Driver Deleted Successfully").show();
@@ -200,6 +209,8 @@ public class DriverController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -215,7 +226,7 @@ public class DriverController implements Initializable {
 
     private void loadDriverTable() {
         try {
-            List<DriverDTO> driverList = driverModel.getDrivers();
+            List<DriverDTO> driverList = driverBO.getDrivers();
             ObservableList<DriverTM> obList = FXCollections.observableArrayList();
 
             for (DriverDTO dto : driverList) {
@@ -231,12 +242,14 @@ public class DriverController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void printDriverOnAction(ActionEvent actionEvent) {
         try {
-            driverModel.printDriverReport();
+            driverBO.printDriverReport();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (JRException e) {
