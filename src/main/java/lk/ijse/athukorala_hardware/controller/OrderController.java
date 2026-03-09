@@ -7,14 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.athukorala_hardware.bo.BOFactory;
+import lk.ijse.athukorala_hardware.bo.custom.CustomerBO;
+import lk.ijse.athukorala_hardware.bo.custom.ItemBO;
+import lk.ijse.athukorala_hardware.bo.custom.PlaceOrderBO;
 import lk.ijse.athukorala_hardware.dto.CustomerDTO;
 import lk.ijse.athukorala_hardware.dto.ItemDTO;
 import lk.ijse.athukorala_hardware.dto.OrderDTO;
 import lk.ijse.athukorala_hardware.dto.OrderItemDTO;
 import lk.ijse.athukorala_hardware.dto.tm.OrderItemTM;
-import lk.ijse.athukorala_hardware.model.CustomerModel;
-import lk.ijse.athukorala_hardware.model.ItemModel;
-import lk.ijse.athukorala_hardware.model.OrderModel;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,9 +25,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class OrderController implements Initializable {
-    private final CustomerModel customerModel = new CustomerModel();
+    /*private final CustomerModel customerModel = new CustomerModel();
     private final ItemModel itemModel = new ItemModel();
-    private final OrderModel orderModel = new OrderModel();
+    private final OrderModel orderModel = new OrderModel();*/
+
+    /*private final CustomerBO customerBO = new CustomerBOImpl();
+    private final ItemBO itemBO = new ItemBOImpl();
+    private final PlaceOrderBO placeOrderBO = new PlaceOrderBOImpl();*/
+
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+    private final ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOType.ITEM);
+    private final PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBO(BOFactory.BOType.ORDER);
 
     @FXML
     public ComboBox<String> cmbCustomer;
@@ -73,7 +82,7 @@ public class OrderController implements Initializable {
 
     private void loadCustomerIds() {
         try {
-            List<String> allCustomerIds = customerModel.getAllCustomerIds();
+            List<String> allCustomerIds = customerBO.getAllCustomerIds();
             ObservableList<String> obList = FXCollections.observableArrayList();
 
             obList.addAll(allCustomerIds);
@@ -82,13 +91,15 @@ public class OrderController implements Initializable {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void loadItemIds() {
 
         try {
-            List<String> itemIdList = itemModel.getAllItemIds();
+            List<String> itemIdList = itemBO.getAllItemIds();
             ObservableList<String> obList = FXCollections.observableArrayList();
 
             obList.addAll(itemIdList);
@@ -105,7 +116,7 @@ public class OrderController implements Initializable {
         System.out.println("Selected Customer : " + selectedCustomer);
 
         try {
-            CustomerDTO customerDTO = customerModel.searchCustomer(selectedCustomer);
+            CustomerDTO customerDTO = customerBO.searchCustomer(selectedCustomer);
             lblCustomerName.setText(customerDTO.getName());
             lblCustomerAddress.setText(customerDTO.getAddress());
 
@@ -119,13 +130,15 @@ public class OrderController implements Initializable {
         System.out.println("selectedItem : " + selectedItem);
 
         try {
-            ItemDTO itemDTO = itemModel.searchItem(selectedItem);
+            ItemDTO itemDTO = itemBO.searchItem(selectedItem);
             lblItemName.setText(itemDTO.getName());
             txtStock.setText(String.valueOf(itemDTO.getQty()));
             txtItemPrice.setText(String.valueOf(itemDTO.getPrice()));
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -222,7 +235,7 @@ public class OrderController implements Initializable {
                     new Date()
             );
 
-            boolean isSaved = orderModel.placeOrder(orderDTO);
+            boolean isSaved = placeOrderBO.placeOrder(orderDTO);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully").show();
